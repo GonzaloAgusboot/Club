@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+
+# Next.js / build output
+.next/
+out/
+build/
+dist/
+next-env.d.ts
+*.tsbuildinfo
+
+# Test output
+coverage/
+
+# Secrets and local configuration. NEVER commit real values.
+# Only .env.example (names without values) is tracked.
+.env
+.env.*
+!.env.example
+
+# Supabase local temp files
+supabase/.temp/
+supabase/.branches/
+
+# Vercel
+.vercel/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
