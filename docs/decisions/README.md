@@ -15,5 +15,6 @@ lo marca como reemplazado. Así se conserva el "por qué" con el paso del tiempo
 | [0006](0006-messaging-provider-abstraction.md) | Mensajería detrás de una interfaz (simulador primero) | Aceptada |
 | [0007](0007-locale-timezone-and-conventions.md) | Mercado, zona horaria, idioma y convenciones | Aceptada |
 | [0008](0008-development-database.md) | Base de desarrollo: Supabase en la nube (plan gratuito), sin Docker | Aceptada |
+| [0009](0009-dependency-versions-and-tooling.md) | Versiones de dependencias y herramientas (Etapa 1) | Aceptada |
 
 Formato de cada ADR: `Estado`, `Contexto`, `Decisión`, `Consecuencias`.

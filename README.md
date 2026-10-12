@@ -9,9 +9,9 @@ app) y acumula visitas, puntos y recompensas.
 
 ## Estado
 
-**Etapa 0: base del repositorio.** Todavía no hay código de la aplicación,
-solo la configuración del repositorio y las decisiones de arquitectura.
-Ver el [plan de desarrollo](#plan-de-desarrollo).
+**Etapa 1: aplicación mínima.** Hay una aplicación Next.js que muestra una
+primera página informativa. Todavía no hay login, base de datos, clientes ni
+puntos. Ver el [plan de desarrollo](#plan-de-desarrollo).
 
 ## Alcance del producto
 
@@ -40,7 +40,9 @@ Ver el [plan de desarrollo](#plan-de-desarrollo).
 ## Stack
 
 Next.js (App Router), TypeScript, Tailwind CSS, Supabase (PostgreSQL + Auth),
-Vitest y Vercel. Gestor de paquetes: npm.
+Vitest y Vercel. Gestor de paquetes: npm. Las versiones elegidas y el motivo
+están en el [ADR 0009](docs/decisions/0009-dependency-versions-and-tooling.md).
+Supabase todavía no está conectado.
 
 Convenciones: nombres técnicos (código, tablas, funciones) en inglés; textos de
 la interfaz en español rioplatense (es-AR). Zona horaria por defecto
@@ -51,24 +53,50 @@ sumar otros países.
 
 ```
 .
+├─ src/
+│  ├─ app/              Rutas y pantallas (Next.js App Router)
+│  └─ messages/         Textos de la interfaz en es-AR
+├─ tests/unit/          Pruebas automáticas (Vitest)
 ├─ docs/
 │  ├─ decisions/        Decisiones de arquitectura (qué elegimos y por qué)
 │  └─ setup/            Guías paso a paso (p. ej. proyecto Supabase)
+├─ package.json         Dependencias y comandos (npm run ...)
+├─ package-lock.json    Versiones exactas instaladas (se registra en Git)
+├─ tsconfig.json        Reglas de TypeScript
+├─ next.config.ts       Configuración de Next.js
+├─ postcss.config.mjs   Conecta Tailwind CSS con el build
+├─ eslint.config.mjs    Reglas del linter
+├─ vitest.config.mts    Configuración de las pruebas
 ├─ .env.example         Nombres de variables de entorno (sin valores)
 ├─ .gitignore           Lo que Git nunca debe registrar (secretos, builds)
 ├─ .gitattributes       Saltos de línea consistentes entre Windows y Linux
 └─ README.md            Esta portada
 ```
 
-Las carpetas de la aplicación (`src/`, `supabase/migrations/`, `tests/`) se
-crean en etapas posteriores.
+Las carpetas `src/modules/`, `src/lib/` y `supabase/migrations/` se crean
+cuando haya algo que poner en ellas.
+
+## Comandos
+
+Requiere Node `^22.12` o `^24` y npm.
+
+| Comando | Qué hace |
+|---|---|
+| `npm install` | Instala las dependencias (la primera vez) |
+| `npm run dev` | Servidor de desarrollo en <http://localhost:3000> |
+| `npm test` | Ejecuta las pruebas una vez |
+| `npm run test:watch` | Pruebas que se repiten al guardar cambios |
+| `npm run typecheck` | Revisa los tipos de TypeScript sin generar archivos |
+| `npm run lint` | Revisa el estilo y errores comunes del código |
+| `npm run build` | Genera la versión de producción |
+| `npm run check` | Todo lo anterior en orden: lint, tipos, pruebas y build |
 
 ## Plan de desarrollo
 
 | Etapa | Contenido |
 |---|---|
-| 0 | Git, reglas de exclusión, plantilla de entorno, README, decisiones de arquitectura (**actual**) |
-| 1 | Base Next.js + TypeScript + Tailwind + Vitest, lint y build |
+| 0 | Git, reglas de exclusión, plantilla de entorno, README, decisiones de arquitectura (hecha) |
+| 1 | Base Next.js + TypeScript + Tailwind + Vitest, lint y build (**actual**) |
 | 2 | Modelo de datos multiempresa, roles, RLS y tests de aislamiento |
 | 3 | Autenticación del personal y panel mínimo (negocio, sucursal) |
 | 4 | Núcleo de fidelización: libro de puntos, visitas, recompensas y canje |
@@ -87,13 +115,13 @@ empieza solo con aprobación explícita.
 ## Verificar esta etapa
 
 ```bash
+npm run check
 git status
-git log --oneline
 git ls-files
 ```
 
-`git ls-files` debe listar solo documentación y configuración: nunca
-`.env.local`, claves ni datos personales.
+`npm run check` debe terminar sin errores. `git ls-files` no debe listar
+`.env.local`, `node_modules/`, `.next/`, claves ni datos personales.
 
 ## Documentación
 
